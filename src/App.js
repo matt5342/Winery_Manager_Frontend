@@ -1,25 +1,52 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Nav from './components/Nav'
+import SignUpForm from './components/SignUp'
+import LogIn from './components/LogIn'
+import TankMap from './components/TankMap'
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router' // react-router v4/v5
+import { ConnectedRouter } from 'connected-react-router'
+import configureStore, { history } from './configureStore'
+import fetchUser from './actions/fetchUser'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const store = configureStore(/* provide initial state if any */)
+
+class App extends Component {
+
+  componentDidMount(){
+    // debugger
+    if(localStorage.getItem("token")){
+      this.props.fetchUser()
+    }
+  }
+
+  render(){
+    return (
+      <div className="App">
+      {/* <Provider store={store}> */}
+        <ConnectedRouter history={history}>
+          <>
+            <Nav />
+            <Switch>
+              {/* <Route exact path='/'  /> */}
+              <Route exact path='/signup' component={SignUpForm} />
+              <Route exact path='/login' component={LogIn} />
+              <Route exact path='/tankmap' component={TankMap} />
+              <Route render={() => (<div>Miss</div>)} />
+            </Switch>  
+          </>
+        </ConnectedRouter>
+      {/* </Provider> */}
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    requesting: state.requesting
+  }
+}
+export default connect(mapStateToProps, { fetchUser })(App);
