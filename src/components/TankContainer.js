@@ -1,75 +1,67 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import patchTanks from '../actions/patchTanks'
 import { Card, Popup, Form, Input, Message, Button } from 'semantic-ui-react'
-import Draggable, {DraggableCore} from 'react-draggable';
+import { Responsive, WidthProvider } from 'react-grid-layout';
+//https://github.com/react-grid-layout/react-grid-layout
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 
 class TankContainer extends Component {
     state = {
-        activeDrags: 0,
-        deltaPosition: {
-          x: 0, y: 0
-        },
-        controlledPosition: {
-          x: -400, y: 200
-        }
-      };
-    
-    handleDrag = (e, ui) => {
-    const {x, y} = this.state.deltaPosition;
-    this.setState({
-        deltaPosition: {
-        x: x + ui.deltaX,
-        y: y + ui.deltaY,
-        }
-    });
-    };
-
-    onStart = () => {
-    this.setState({activeDrags: ++this.state.activeDrags});
-    };
-
-    onStop = () => {
-    this.setState({activeDrags: --this.state.activeDrags});
-    };
-    onDrop = (e) => {
-    this.setState({activeDrags: --this.state.activeDrags});
-    if (e.target.classList.contains("drop-target")) {
-        alert("Dropped!");
-        e.target.classList.remove('hovered');
-    }
-    };
-    onDropAreaMouseEnter = (e) => {
-    if (this.state.activeDrags) {
-        e.target.classList.add('hovered');
-    }
-    }
-    onDropAreaMouseLeave = (e) => {
-    e.target.classList.remove('hovered');
+        layout: null, 
+        isDraggable: false, 
+        isResizable: false
     }
 
     renderTanks = () => {
-        const dragHandlers = {onStart: this.onStart, onStop: this.onStop};
-        const {deltaPosition} = this.state;
         return this.props.tanks.map(tank => {
+            // debugger
             return (
-                <div style={{height: '800px', width: '1000px', padding: '10px'}}>
-                    <Draggable defaultPosition={{x:tank.xaxis, y:tank.yaxis}} bounds="parent" {...dragHandlers}>
-                    <div className="tank">
+                <div key={tank.id} 
+                    data-grid={{x: tank.xaxis, y: tank.yaxis, w: tank.width, h: tank.height}}
+>
+                    <span className='text'>
                         {tank.name}
-                    </div>
-                    </Draggable>
+                    </span>
                 </div>
             )
         })
+    }
+    onLayoutChange = (layout) => {
+        this.setState({layout: layout})
+        // debugger
+    }
+    clickEditLayout = () => {
+        this.setState({
+            isDraggable: !this.state.isDraggable, 
+            isResizable: !this.state.isResizable
+        })
+    }
+    clickSaveLayout = () => {
+        // debugger
+        this.clickEditLayout()
+        this.props.patchTanks(this.state.layout, this.props.tanks[0].winery_id)
     }
     
     render(){
         return(
             <div>
-                <div className="box" style={{height: '100%', width: '100%', position: 'center', overflow: 'auto', padding: '0'}}>
+                <Button onClick={this.state.isDraggable ? this.clickSaveLayout : this.clickEditLayout}>{this.state.isDraggable ? "Save Layout" : "Edit Layout"}</Button>
+                <ResponsiveGridLayout 
+                    className='layout' compactType={null}         
+                    breakpoints={{lg: 40}}
+                    rowHeight={20}
+                    cols={{lg: 40}}
+                    onLayoutChange={(layout) => 
+                    this.onLayoutChange(layout) }
+                    isDraggable={this.state.isDraggable}
+                    isResizable={this.state.isResizable}
+                    preventCollision={true}
+                    >
                     {this.renderTanks()}
-                </div>
+                </ResponsiveGridLayout>
 
             </div>
         )
@@ -84,4 +76,4 @@ const mapStateToProps = state => {
     
   }
 
-export default connect(mapStateToProps)(TankContainer);
+export default connect(mapStateToProps, { patchTanks })(TankContainer);

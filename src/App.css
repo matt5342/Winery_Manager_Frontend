@@ -50,7 +50,7 @@ body {
   margin: 0 50px;
 }
 
-.react-draggable, .cursor {
+/* .react-draggable, .cursor {
   cursor: move;
 }
 .no-cursor {
@@ -89,18 +89,18 @@ body {
   border: 2px solid #999;
   border-radius: 50%;
   /* resize: both; */
-  width: 10vw; /* percent of container width */
+  /* width: 10vw; percent of container width
   height: 10vw;
   margin: 10px;
   padding: 10px;
   float: left;
-}
-.no-pointer-events {
+} */
+/* .no-pointer-events {
   pointer-events: none;
 }
 .hovered {
   background-color: gray;
-}
+} */ */
 
 
 /*
@@ -120,7 +120,8 @@ body {
 }
 .react-grid-item {
   transition: all 200ms ease;
-  transition-property: left, top;
+  background-color: rgb(189, 184, 184);
+  border-radius: 50%;
 }
 .react-grid-item img {
   pointer-events: none;

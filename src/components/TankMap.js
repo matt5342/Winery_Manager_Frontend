@@ -53,16 +53,19 @@ class TankMap extends Component {
                     volume: this.state.volume, 
                     material: this.state.material, 
                     status: "Clean",
-                    xaxis: 350, 
-                    yaxis: 4
+                    xaxis: 18, 
+                    yaxis: 2, 
+                    width: 3, 
+                    height: 3
                 }
             })
         }
+        // debugger
         fetch('http://localhost:3000/winery/' + this.props.winery_id + '/new_tank', reqObj)
         .then(r => r.json())
         .then(data => {
                 // debugger
-                this.props.fetchTanks()
+                this.props.fetchTanks(this.props.winery_id)
             }) 
     }
     renderTankForm = () => {

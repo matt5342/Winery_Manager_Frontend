@@ -14,6 +14,12 @@ const tanksReducer = (state = { tanks: [], requesting: false }, action) => {
                 tanks: action.tanks, 
                 requesting: false
             }
+        case 'PATCH_TANKS': //updates tank map layout
+            return {
+                ...state, 
+                tanks: action.tanks, 
+                requesting: false
+            }
         case 'ADD_TANK':
             return {
                 ...state,
