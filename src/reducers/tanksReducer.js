@@ -1,5 +1,5 @@
 
-const userReducer = (state = { tanks: [], requesting: false }, action) => {
+const tanksReducer = (state = { tanks: [], requesting: false }, action) => {
     // debugger
     switch (action.type) {
         case 'START_FETCHING_TANKS':
@@ -8,13 +8,13 @@ const userReducer = (state = { tanks: [], requesting: false }, action) => {
                 tanks: {...state.tanks}, 
                 requesting: true
             }
-        case 'FETCH_CURRENT_TANKS':
+        case 'FETCH_TANKS':
             return {
                 ...state, 
                 tanks: action.tanks, 
                 requesting: false
             }
-        case 'SIGN_UP_NEW_TANKS':
+        case 'ADD_TANK':
             return {
                 ...state,
                 tanks: action.tanks, 
@@ -25,4 +25,4 @@ const userReducer = (state = { tanks: [], requesting: false }, action) => {
             return state;
     }
 }
-export default userReducer;
+export default tanksReducer;

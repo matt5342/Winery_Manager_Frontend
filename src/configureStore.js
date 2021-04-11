@@ -4,7 +4,7 @@ import { routerMiddleware } from 'connected-react-router'
 import createRootReducer from './reducers/root'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-
+//https://github.com/supasate/connected-react-router
 export const history = createBrowserHistory()
 
 export default function configureStore(preloadedState) {

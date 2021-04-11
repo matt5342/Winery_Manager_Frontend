@@ -3,12 +3,13 @@ import './App.css';
 import Nav from './components/Nav'
 import SignUpForm from './components/SignUp'
 import LogIn from './components/LogIn'
-import TankMap from './components/TankMap'
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router' // react-router v4/v5
 import { ConnectedRouter } from 'connected-react-router'
 import configureStore, { history } from './configureStore'
 import fetchUser from './actions/fetchUser'
+import MainContainer from './components/MainContainer';
+import TankMap from './components/TankMap';
 
 const store = configureStore(/* provide initial state if any */)
 
@@ -32,7 +33,8 @@ class App extends Component {
               {/* <Route exact path='/'  /> */}
               <Route exact path='/signup' component={SignUpForm} />
               <Route exact path='/login' component={LogIn} />
-              <Route exact path='/tankmap' component={TankMap} />
+              <Route exact path='/tankmap' component={MainContainer} />
+              <Route path='/winery/' component={TankMap} />
               <Route render={() => (<div>Miss</div>)} />
             </Switch>  
           </>
