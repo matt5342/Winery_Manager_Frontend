@@ -146,7 +146,7 @@ body {
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: red;
+  background: rgba(238, 210, 84, 0.842);
   opacity: 0.2;
   transition-duration: 100ms;
   z-index: 2;

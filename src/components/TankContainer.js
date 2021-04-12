@@ -18,11 +18,32 @@ class TankContainer extends Component {
     renderTanks = () => {
         return this.props.tanks.map(tank => {
             // debugger
+            let colorCode = 'grey';
+            if (tank.lots[0]){
+                switch (tank.lots[0].color) {
+                    case "Red":
+                        colorCode = "rgba(122, 36, 72, 0.822)"
+                        break;
+                    case "White":
+                        colorCode = "rgba(238, 210, 84, 0.842)"
+                        break;
+                    case "Rosé":
+                        colorCode = "rgba(210, 101, 134, 0.842)"
+                        break;
+                    default:
+                        colorCode = "grey"
+                        break;
+                }
+            }
+            // color for reds: rgba(122, 36, 72, 0.822)
+            // rose: rgba(210, 101, 134, 0.842)
+            // white: rgba(238, 210, 84, 0.842);
             return (
                 <div key={tank.id} 
                     data-grid={{x: tank.xaxis, y: tank.yaxis, w: tank.width, h: tank.height}}
->
-                    <span className='text'>
+                    style={{ backgroundColor: colorCode }}
+                >
+                    <span className='text' style={{fontWeight: 'bold'}}>
                         {tank.name}
                     </span>
                 </div>
@@ -73,7 +94,6 @@ const mapStateToProps = state => {
     return(
         state.tanks
     ) 
-    
   }
 
 export default connect(mapStateToProps, { patchTanks })(TankContainer);
