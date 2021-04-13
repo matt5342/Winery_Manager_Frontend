@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import postAction from '../actions/postAction'
+import postWorkOrder from '../actions/postWorkOrder'
 import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
 import TankMap from './TankMap';
 
@@ -8,7 +8,7 @@ import TankMap from './TankMap';
 
 class WorkOrder extends Component {
     state = {
-        step: "selectAction"
+        step: "selectType"
     }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -16,30 +16,30 @@ class WorkOrder extends Component {
     handleRackSubmit = () => {
         // debugger
         let attributes = { 
-            name: this.state.action,
+            name: this.state.workOrder,
             lot_id: this.state.exit_tank.lots[0].id, //change for blending
             tank_id: this.state.exit_tank.id, 
             notes: this.state.notes,
             status: 'Initialized'
         }
-        this.props.postAction(attributes)
+        this.props.postWorkOrder(attributes)
     }
-    renderActionSelector = () => {
-        const actions = [
+    renderWorkOrderSelector = () => {
+        const workOrders = [
             {key: 'r', text: 'Rack', value: 'Rack'}
         ]
         const tankNames = []
         this.props.tanks.tanks.map(tank => tankNames.push({key: tank.id, text: tank.name, value: tank}))
         switch (this.state.step) {
-            case "selectAction":
+            case "selectType":
                 return (
                     <div>
                         <Form style={{width: '300px'}} onSubmit={this.nextStep}>
                             <Form.Select 
-                                label='Action:' 
-                                options={actions}
-                                placeholder='Choose Action...'
-                                name='action'
+                                label='Type:' 
+                                options={workOrders}
+                                placeholder='Choose Type...'
+                                name='workOrder'
                                 onChange={this.handleChange}
                             />
                             <Form.Field
@@ -98,15 +98,15 @@ class WorkOrder extends Component {
         }
     }
     nextStep = () => {
-        this.setState({step: this.state.action})
+        this.setState({step: this.state.workOrder})
     }
     previousStep = () => {
-        this.setState({step: "selectAction"})
+        this.setState({step: "selectType"})
     }
     render(){
         return(
             <div>
-                {this.renderActionSelector()}
+                {this.renderWorkOrderSelector()}
             </div>
         )
     }
@@ -117,8 +117,8 @@ const mapStateToProps = state => {
     // debugger
     return {
         tanks: state.tanks,
-        winery_id: state.router.location.pathname.split('/')[2]
+        section_id: state.router.location.pathname.split('/')[2]
     }
   }
 
-export default connect(mapStateToProps, { postAction })(WorkOrder);
+export default connect(mapStateToProps, { postWorkOrder })(WorkOrder);

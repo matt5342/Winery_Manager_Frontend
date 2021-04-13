@@ -1,9 +1,9 @@
 
-export default function fetchTanks(winery_id) {
+export default function fetchTanks(section_id) {
     // debugger
     return (dispatch) => {
         dispatch({ type: 'START_FETCHING_TANKS' });
-        fetch('http://localhost:3000/winery/' + winery_id + '/tanks', {
+        fetch('http://localhost:3000/section/' + section_id + '/tanks', {
             headers: {"Authorization": localStorage.token}
         })
         .then(r => r.json())

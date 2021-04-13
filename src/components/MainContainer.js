@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import fetchWineries from '../actions/fetchWineries'
+import fetchSections from '../actions/fetchSections'
 import { Popup, Form, Input, Message, Button } from 'semantic-ui-react'
-import WineryContainer from './WineryContainer';
+import SectionContainer from './SectionContainer';
 
 class MainContainer extends Component {
     state = {
@@ -11,21 +11,22 @@ class MainContainer extends Component {
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
     componentDidMount(){
+        // debugger
         if (localStorage.getItem("token")){
-            this.props.fetchWineries()
+            this.props.fetchSections()
         }
     }
-    renderWineryForm = () => {
+    renderSectionForm = () => {
         return (
             <div>
-                <Form style={{width: '300px'}} onSubmit={this.handleWinerySubmit}>
+                <Form style={{width: '300px'}} onSubmit={this.handleSectionSubmit}>
                     <Form.Field
                         style={{width: '300px'}}
                         id='form-input-control-name'
                         control={Input}
                         label='Name:'
                         name='name'
-                        placeholder='Reserve Estates'
+                        placeholder='Production Room'
                         className='eight wide field'
                         onChange={this.handleChange}
                     />
@@ -40,7 +41,7 @@ class MainContainer extends Component {
         )
     }
 
-    handleWinerySubmit = e => {
+    handleSectionSubmit = e => {
         e.preventDefault()
         let reqObj = {
             method: 'POST',
@@ -49,17 +50,17 @@ class MainContainer extends Component {
                 "Authorization": localStorage.getItem("token")
             },
             body: JSON.stringify({
-                winery: {
+                section: {
                     name: this.state.name
                 }
             })
         }
-        fetch('http://localhost:3000/winery', reqObj)
+        fetch('http://localhost:3000/section', reqObj)
         .then(r => r.json())
         .then(data => {
                 // debugger
                 // localStorage.setItem("token", data.jwt)
-                this.props.fetchWineries()
+                this.props.fetchSections()
             }) 
     }
     
@@ -71,7 +72,7 @@ class MainContainer extends Component {
     
     handleClose = event => {
         if (event.target.name === undefined){
-            this.setState({ wineryIsOpen: false, tankIsOpen: false})
+            this.setState({ sectionIsOpen: false, tankIsOpen: false})
         }
         else{
             let whichOpen = event.target.name + 'IsOpen'
@@ -79,21 +80,21 @@ class MainContainer extends Component {
         }
     }
     
-    checkForWinery = () => {
+    checkForSection = () => {
         // debugger
-        if (Object.keys(this.props.wineries.wineries).includes("error")){
+        if (Object.keys(this.props.sections.sections).includes("error") || this.props.sections.sections.length < 1){
             return (
                 <div>
                     <Message>
-                        <Message.Header>No Winery Created Yet</Message.Header>
+                        <Message.Header>No Section Created Yet</Message.Header>
                         <p>
-                            Please create your winery to continue.
+                            Please create a section to continue.
                         </p>
                         <Popup
-                            trigger={ <Button name='winery' color='purple' content="Create My Winery"/> }
-                            content={this.renderWineryForm()}
+                            trigger={ <Button name='section' color='purple' content="Create a Section"/> }
+                            content={this.renderSectionForm()}
                             on='click'
-                            open={this.state.wineryIsOpen}
+                            open={this.state.sectionIsOpen}
                             onClose={this.handleClose}
                             onOpen={this.handleOpen}
                             position='bottom center'
@@ -103,21 +104,21 @@ class MainContainer extends Component {
                 </div>
             ) 
         }
-        else if (Array.isArray(this.props.wineries.wineries)) {
+        else if (Array.isArray(this.props.sections.sections)) {
             // debugger
             return (
                 <div>
                     <Popup
-                        trigger={ <Button name='winery' color='purple' content="Add a Winery"/> }
-                        content={this.renderWineryForm()}
+                        trigger={ <Button name='section' color='purple' content="Add a Section"/> }
+                        content={this.renderSectionForm()}
                         on='click'
-                        open={this.state.wineryIsOpen}
+                        open={this.state.sectionIsOpen}
                         onClose={this.handleClose}
                         onOpen={this.handleOpen}
                         position='bottom center'
                         width={8}
                         />
-                    <WineryContainer />
+                    <SectionContainer />
                 </div>
             )
         }
@@ -126,8 +127,8 @@ class MainContainer extends Component {
     render(){
         return(
             <>
-                <h1>Choose a Winery</h1>
-                {this.checkForWinery()}
+                <h1>Choose a Section</h1>
+                {this.checkForSection()}
             </>
         )
     }
@@ -135,8 +136,8 @@ class MainContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        wineries: state.wineries
+        sections: state.sections
     }
   }
 
-export default connect(mapStateToProps, { fetchWineries })(MainContainer);
+export default connect(mapStateToProps, { fetchSections })(MainContainer);

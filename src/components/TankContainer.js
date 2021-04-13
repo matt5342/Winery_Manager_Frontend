@@ -63,7 +63,7 @@ class TankContainer extends Component {
     clickSaveLayout = () => {
         // debugger
         this.clickEditLayout()
-        this.props.patchTanks(this.state.layout, this.props.tanks[0].winery_id)
+        this.props.patchTanks(this.state.layout, this.props.tanks[0].section_id)
     }
     
     render(){

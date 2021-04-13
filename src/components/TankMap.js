@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchTanks from '../actions/fetchTanks'
 import postLot from '../actions/postLot'
-import postAction from '../actions/postAction'
+import postWorkOrder from '../actions/postWorkOrder'
 import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
 import TankContainer from './TankContainer';
 import WorkOrder from './WorkOrder';
@@ -19,7 +19,7 @@ class TankMap extends Component {
     
     handleClose = event => {
         if (event.target.name === undefined){
-            this.setState({ lotIsOpen: false, tankIsOpen: false, actionIsOpen: false })
+            this.setState({ lotIsOpen: false, tankIsOpen: false, workOrderIsOpen: false })
         }
         else{
             let whichOpen = event.target.name + 'IsOpen'
@@ -28,10 +28,13 @@ class TankMap extends Component {
     }
     
     componentDidMount(){
-        this.props.fetchTanks(this.props.winery_id)
+        if (localStorage.getItem("token")){
+            this.props.fetchTanks(this.props.section_id)
+        }
     }
     handleTankSubmit = e => {
         e.preventDefault()
+        this.setState({ tankIsOpen: false })
         let reqObj = {
             method: 'POST',
             headers: {
@@ -51,10 +54,10 @@ class TankMap extends Component {
                 }
             })
         }
-        fetch('http://localhost:3000/winery/' + this.props.winery_id + '/new_tank', reqObj)
+        fetch('http://localhost:3000/section/' + this.props.section_id + '/new_tank', reqObj)
         .then(r => r.json())
         .then(data => {
-            this.props.fetchTanks(this.props.winery_id)
+            this.props.fetchTanks(this.props.section_id)
         }) 
     }
     handleLotSubmit = () => {
@@ -230,10 +233,10 @@ class TankMap extends Component {
                         width={8}
                     />
                     <Popup
-                        trigger={ <Button name='action' color='grey' content="New Work Order"/> }
+                        trigger={ <Button name='workOrder' color='grey' content="New Work Order"/> }
                         content={<WorkOrder />}
                         on='click'
-                        open={this.state.actionIsOpen}
+                        open={this.state.workOrderIsOpen}
                         onClose={this.handleClose}
                         onOpen={this.handleOpen}
                         position='bottom center'
@@ -258,8 +261,8 @@ const mapStateToProps = state => {
     // debugger
     return {
         tanks: state.tanks,
-        winery_id: state.router.location.pathname.split('/')[2]
+        section_id: state.router.location.pathname.split('/')[2]
     }
   }
 
-export default connect(mapStateToProps, { fetchTanks, postLot, postAction })(TankMap);
+export default connect(mapStateToProps, { fetchTanks, postLot, postWorkOrder })(TankMap);

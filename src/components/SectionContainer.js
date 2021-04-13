@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import fetchWineries from '../actions/fetchWineries'
+import fetchSections from '../actions/fetchSections'
 import { Card, Popup, Form, Input, Message, Button } from 'semantic-ui-react'
-let default_winery = require(`../assets/default_winery_photo.jpg`) 
+let default_section = require(`../assets/default_winery_photo.jpg`) 
 
-class WineryContainer extends Component {
+class SectionContainer extends Component {
 
     renderCards = () => {
-        return this.props.wineries.map(winery => {
+        // debugger
+        return this.props.sections.map(section => {
             return (
                 <Card
-                    image={default_winery.default}
-                    header={winery.name}
-                    key={winery.id}
-                    href={`/winery/${winery.id}`}
+                    image={default_section.default}
+                    header={section.name}
+                    key={section.id}
+                    href={`/section/${section.id}`}
                 />
 
             )
@@ -34,10 +35,11 @@ class WineryContainer extends Component {
 }
 
 const mapStateToProps = state => {
+    // debugger
     return(
-        state.wineries
+        state.sections
     ) 
     
   }
 
-export default connect(mapStateToProps)(WineryContainer);
+export default connect(mapStateToProps)(SectionContainer);

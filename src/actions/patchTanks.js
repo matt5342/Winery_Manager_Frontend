@@ -1,4 +1,4 @@
-export default function patchTanks(layout_array, winery_id) {
+export default function patchTanks(layout_array, section_id) {
     return (dispatch) => {
         dispatch({ type: "PATCH_TANK"})
         layout_array.map(layout => {
@@ -17,7 +17,7 @@ export default function patchTanks(layout_array, winery_id) {
                     }
                 })
             }
-            fetch('http://localhost:3000/winery/' + winery_id + '/tanks/' + layout.i, reqObj)
+            fetch('http://localhost:3000/section/' + section_id + '/tanks/' + layout.i, reqObj)
             // .then(r => r.json())
             // .then(tank => {
             //     debugger

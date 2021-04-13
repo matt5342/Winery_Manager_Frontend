@@ -1,23 +1,23 @@
 
-const wineriesReducer = (state = { wineries: [], requesting: false }, action) => {
+const sectionsReducer = (state = { sections: [], requesting: false }, action) => {
     // debugger
     switch (action.type) {
-        case 'START_FETCHING_WINERY':
+        case 'START_FETCHING_SECTION':
             return {
                 ...state, 
-                wineries: {...state.wineries}, 
+                sections: {...state.sections}, 
                 requesting: true
             }
-        case 'FETCH_WINERY':
+        case 'FETCH_SECTION':
             return {
                 ...state, 
-                wineries: action.wineries, 
+                sections: action.sections, 
                 requesting: false
             }
-        case 'ADD_WINERY':
+        case 'ADD_SECTION':
             return {
                 ...state,
-                wineries: action.wineries, 
+                sections: action.sections, 
                 requesting: false
             }
 
@@ -25,4 +25,4 @@ const wineriesReducer = (state = { wineries: [], requesting: false }, action) =>
             return state;
     }
 }
-export default wineriesReducer;
+export default sectionsReducer;

@@ -11,6 +11,7 @@ class LogIn extends Component {
     // handleSubmit = () => this.setState({ email: '', name: '' })
     handleSubmit = (e) => {
     e.preventDefault()
+    debugger
     let reqObj = {
         method: 'POST',
         headers: {
@@ -26,7 +27,6 @@ class LogIn extends Component {
     fetch('http://localhost:3000/login', reqObj)
     .then(r => r.json())
     .then(data => {
-        // debugger
             localStorage.setItem("token", data.jwt)
             this.props.fetchUser()
             // this.props.setUser(data.user)

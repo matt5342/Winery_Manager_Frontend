@@ -1,7 +1,7 @@
-export default function postAction(attributes) {
+export default function postWorkOrder(attributes) {
     return (dispatch) => {
         debugger
-        dispatch({ type: "POST_ACTION" })
+        dispatch({ type: "POST_WORK_ORDER" })
         let reqObj = {
             method: 'POST',
             headers: {
@@ -9,7 +9,7 @@ export default function postAction(attributes) {
                 "Authorization": localStorage.getItem("token")
             },
             body: JSON.stringify({
-                action: {
+                work_order: {
                     name: attributes.name, 
                     lot_id: attributes.lot_id, 
                     tank_id: attributes.tank_id, 
@@ -18,7 +18,7 @@ export default function postAction(attributes) {
                 }
             })
         }
-        fetch('http://localhost:3000/actions/', reqObj)
+        fetch('http://localhost:3000/work_order/', reqObj)
         if (attributes.name === 'Rack'){
 
         }

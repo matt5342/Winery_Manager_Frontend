@@ -16,7 +16,6 @@ const store = configureStore(/* provide initial state if any */)
 class App extends Component {
 
   componentDidMount(){
-    // debugger
     if(localStorage.getItem("token")){
       this.props.fetchUser()
     }
@@ -34,7 +33,7 @@ class App extends Component {
               <Route exact path='/signup' component={SignUpForm} />
               <Route exact path='/login' component={LogIn} />
               <Route exact path='/tankmap' component={MainContainer} />
-              <Route path='/winery/' component={TankMap} />
+              <Route path='/section/' component={TankMap} />
               <Route render={() => (<div>Miss</div>)} />
             </Switch>  
           </>

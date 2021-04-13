@@ -1,5 +1,6 @@
 
 export default function fetchUser() {
+
     return (dispatch) => {
         dispatch({ type: 'START_FETCHING_CURRENT_USER' });
         fetch('http://localhost:3000/login', {

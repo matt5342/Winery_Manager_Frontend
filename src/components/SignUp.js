@@ -8,7 +8,6 @@ class SignUpForm extends Component {
   
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
   
-    // handleSubmit = () => this.setState({ email: '', name: '' })
     handleSubmit = (e) => {
     e.preventDefault()
     let reqObj = {
@@ -20,7 +19,8 @@ class SignUpForm extends Component {
             owner: {
                 username: this.state.username,
                 password: this.state.password, 
-                email: this.state.email
+                email: this.state.email,
+                winery_name: this.state.winery_name
             }
         })
     }
@@ -52,6 +52,15 @@ class SignUpForm extends Component {
                 // }}
                 />
                 <Form.Field
+                    id='form-input-control-name'
+                    control={Input}
+                    label='Winery Name'
+                    name='winery_name'
+                    placeholder='Reserve Estates'
+                    className='eight wide field'
+                    onChange={this.handleChange}
+                />
+                <Form.Field
                     id='form-input-control-username'
                     control={Input}
                     label='Username'
@@ -74,7 +83,7 @@ class SignUpForm extends Component {
                 id='form-button-control-public'
                 control={Button}
                 content='Sign Up'
-                href='tankmap'
+                // href='tankmap'
                 // label='Label with htmlFor'
                 />    
         </Form>
