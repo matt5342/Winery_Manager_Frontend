@@ -19,7 +19,9 @@ class TankContainer extends Component {
         return this.props.tanks.map(tank => {
             // debugger
             let colorCode = 'grey';
+            let lotName = null
             if (tank.lots[0]){
+                lotName = tank.lots[0].name
                 switch (tank.lots[0].color) {
                     case "Red":
                         colorCode = "rgba(122, 36, 72, 0.822)"
@@ -35,16 +37,14 @@ class TankContainer extends Component {
                         break;
                 }
             }
-            // color for reds: rgba(122, 36, 72, 0.822)
-            // rose: rgba(210, 101, 134, 0.842)
-            // white: rgba(238, 210, 84, 0.842);
             return (
                 <div key={tank.id} 
                     data-grid={{x: tank.xaxis, y: tank.yaxis, w: tank.width, h: tank.height}}
                     style={{ backgroundColor: colorCode }}
                 >
                     <span className='text' style={{fontWeight: 'bold'}}>
-                        {tank.name}
+                        {tank.name}<br/>
+                        {lotName ? lotName : null}
                     </span>
                 </div>
             )

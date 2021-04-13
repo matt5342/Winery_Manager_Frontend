@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchTanks from '../actions/fetchTanks'
 import postLot from '../actions/postLot'
-import { Popup, Form, Input, Message, Button } from 'semantic-ui-react'
+import postAction from '../actions/postAction'
+import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
 import TankContainer from './TankContainer';
+import WorkOrder from './WorkOrder';
 
 class TankMap extends Component {
     state = {
@@ -17,7 +19,7 @@ class TankMap extends Component {
     
     handleClose = event => {
         if (event.target.name === undefined){
-            this.setState({ lotIsOpen: false, tankIsOpen: false})
+            this.setState({ lotIsOpen: false, tankIsOpen: false, actionIsOpen: false })
         }
         else{
             let whichOpen = event.target.name + 'IsOpen'
@@ -227,6 +229,16 @@ class TankMap extends Component {
                         position='bottom center'
                         width={8}
                     />
+                    <Popup
+                        trigger={ <Button name='action' color='grey' content="New Work Order"/> }
+                        content={<WorkOrder />}
+                        on='click'
+                        open={this.state.actionIsOpen}
+                        onClose={this.handleClose}
+                        onOpen={this.handleOpen}
+                        position='bottom center'
+                        width={8}
+                    />
                     <TankContainer />
                 </div>
             )
@@ -250,4 +262,4 @@ const mapStateToProps = state => {
     }
   }
 
-export default connect(mapStateToProps, { fetchTanks, postLot })(TankMap);
+export default connect(mapStateToProps, { fetchTanks, postLot, postAction })(TankMap);

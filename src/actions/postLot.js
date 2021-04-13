@@ -1,5 +1,5 @@
 export default function postLot(attributes) {
-    debugger
+    // debugger
     return (dispatch) => {
         dispatch({ type: "POST_LOT" })
         let reqObj = {

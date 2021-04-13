@@ -81,6 +81,14 @@ class Nav extends Component {
         >
           Inventory
         </Menu.Item>
+        <Menu.Item
+          name='workOrders'
+          href='workOrders'
+          active={activeItem === 'workOrders'}
+          onClick={this.handleItemClick}
+        >
+          Work Orders
+        </Menu.Item>
         <Menu.Menu position='right'>
           {this.handleSignedInState()}
         </Menu.Menu>
