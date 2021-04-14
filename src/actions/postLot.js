@@ -1,3 +1,6 @@
+import fetchTanks from "./fetchTanks"
+import fetchLots from "./fetchLots"
+
 export default function postLot(attributes) {
     // debugger
     return (dispatch) => {
@@ -19,6 +22,12 @@ export default function postLot(attributes) {
             })
         }
         fetch('http://localhost:3000/lots/' + attributes.tank_id, reqObj)
+        .then(r => r.json())
+        .then(data => {
+            // debugger
+            fetchLots()
+            fetchTanks(attributes.section_id)
+        }) 
     }
 
 }

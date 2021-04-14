@@ -5,7 +5,7 @@ import postLot from '../actions/postLot'
 import postWorkOrder from '../actions/postWorkOrder'
 import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
 import TankContainer from './TankContainer';
-import WorkOrder from './WorkOrder';
+import WorkOrderForm from './WorkOrderForm';
 
 class TankMap extends Component {
     state = {
@@ -15,6 +15,9 @@ class TankMap extends Component {
     handleOpen = event => {
         let whichOpen = event.target.name + 'IsOpen'
         this.setState({ [whichOpen]: true })
+    }
+    handleSubmitClose = name => {
+        this.setState({ [name]: false})
     }
     
     handleClose = event => {
@@ -61,12 +64,14 @@ class TankMap extends Component {
         }) 
     }
     handleLotSubmit = () => {
+        this.setState({ lotIsOpen: false })
         let attributes = { 
             name: this.state.name,
             color: this.state.color,
             vintage: this.state.vintage, 
             volume: this.state.lotVolume, 
-            tank_id: this.state.tank_id
+            tank_id: this.state.tank_id, 
+            section_id: this.props.section_id
         }
         this.props.postLot(attributes)
     }
@@ -234,7 +239,7 @@ class TankMap extends Component {
                     />
                     <Popup
                         trigger={ <Button name='workOrder' color='grey' content="New Work Order"/> }
-                        content={<WorkOrder />}
+                        content={<WorkOrderForm handleSubmitClose={this.handleSubmitClose} />}
                         on='click'
                         open={this.state.workOrderIsOpen}
                         onClose={this.handleClose}

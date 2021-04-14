@@ -1,6 +1,6 @@
 export default function postWorkOrder(attributes) {
     return (dispatch) => {
-        debugger
+        // debugger
         dispatch({ type: "POST_WORK_ORDER" })
         let reqObj = {
             method: 'POST',
@@ -12,16 +12,14 @@ export default function postWorkOrder(attributes) {
                 work_order: {
                     name: attributes.name, 
                     lot_id: attributes.lot_id, 
-                    tank_id: attributes.tank_id, 
+                    out_tank: attributes.out_tank, 
+                    in_tank: attributes.in_tank, 
                     notes: attributes.notes,
                     status: 'Initialized'
                 }
             })
         }
         fetch('http://localhost:3000/work_order/', reqObj)
-        if (attributes.name === 'Rack'){
-
-        }
     }
 
 }

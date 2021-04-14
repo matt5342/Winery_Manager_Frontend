@@ -83,7 +83,7 @@ class Nav extends Component {
         </Menu.Item>
         <Menu.Item
           name='workOrders'
-          href='workOrders'
+          href='/work_orders'
           active={activeItem === 'workOrders'}
           onClick={this.handleItemClick}
         >

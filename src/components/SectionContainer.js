@@ -39,7 +39,6 @@ const mapStateToProps = state => {
     return(
         state.sections
     ) 
-    
   }
 
 export default connect(mapStateToProps)(SectionContainer);

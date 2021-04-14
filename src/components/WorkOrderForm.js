@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import postWorkOrder from '../actions/postWorkOrder'
 import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
-import TankMap from './TankMap';
 
 
 
-class WorkOrder extends Component {
+
+class WorkOrderForm extends Component {
     state = {
         step: "selectType"
     }
@@ -15,10 +15,12 @@ class WorkOrder extends Component {
 
     handleRackSubmit = () => {
         // debugger
+        this.props.handleSubmitClose("workOrderIsOpen")
         let attributes = { 
-            name: this.state.workOrder,
-            lot_id: this.state.exit_tank.lots[0].id, //change for blending
-            tank_id: this.state.exit_tank.id, 
+            name: this.state.name,
+            lot_id: this.state.out_tank.lots[0].id, //change for blending
+            out_tank: this.state.out_tank.name, 
+            in_tank: this.state.in_tank.name, 
             notes: this.state.notes,
             status: 'Initialized'
         }
@@ -39,7 +41,7 @@ class WorkOrder extends Component {
                                 label='Type:' 
                                 options={workOrders}
                                 placeholder='Choose Type...'
-                                name='workOrder'
+                                name='name'
                                 onChange={this.handleChange}
                             />
                             <Form.Field
@@ -58,14 +60,14 @@ class WorkOrder extends Component {
                                 label='From Tank:' 
                                 options={tankNames}
                                 placeholder='Choose Tank...'
-                                name='exit_tank'
+                                name='out_tank'
                                 onChange={this.handleChange}
                             />
                             <Form.Select 
                                 label='To Tank:' 
                                 options={tankNames}
                                 placeholder='Choose Tank...'
-                                name='enter_tank'
+                                name='in_tank'
                                 onChange={this.handleChange}
                             />
                             <Form.Field
@@ -98,7 +100,7 @@ class WorkOrder extends Component {
         }
     }
     nextStep = () => {
-        this.setState({step: this.state.workOrder})
+        this.setState({step: this.state.name})
     }
     previousStep = () => {
         this.setState({step: "selectType"})
@@ -121,4 +123,4 @@ const mapStateToProps = state => {
     }
   }
 
-export default connect(mapStateToProps, { postWorkOrder })(WorkOrder);
+export default connect(mapStateToProps, { postWorkOrder })(WorkOrderForm);
