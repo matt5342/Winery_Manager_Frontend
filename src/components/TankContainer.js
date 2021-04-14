@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import patchTanks from '../actions/patchTanks'
 import { Card, Popup, Form, Input, Message, Button } from 'semantic-ui-react'
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import SingleTank from './SingleTank';
+import { push } from 'connected-react-router';
 //https://github.com/react-grid-layout/react-grid-layout
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -43,14 +45,22 @@ class TankContainer extends Component {
                 <div key={tank.id} 
                     data-grid={{x: tank.xaxis, y: tank.yaxis, w: tank.width, h: tank.height}}
                     style={{ backgroundColor: colorCode }}
+                    data-id={tank.id}
+                    // onClick={href=`tank/${tank.id}`}
+                    // href={`tank/${tank.id}`}
+                    onClick={this.state.isDraggable ? null : this.renderSingleTank}
                 >
-                    <span className='text' style={{fontWeight: 'bold'}}>
+                    <span data-id={tank.id} className='text' style={{fontWeight: 'bold'}}>
                         {tank.name}<br/>
                         {lotName ? lotName : null}
                     </span>
                 </div>
             )
         })
+    }
+    renderSingleTank = event =>{
+        // debugger
+        this.props.push(`/tank/${event.target.dataset.id}`)
     }
     onLayoutChange = (layout) => {
         this.setState({layout: layout})
@@ -93,9 +103,11 @@ class TankContainer extends Component {
 }
 
 const mapStateToProps = state => {
-    return(
-        state.tanks
-    ) 
+    return{
+        tanks: state.tanks.tanks,  
+        pathname: state.router.location.pathname
+    
+    }
   }
 
-export default connect(mapStateToProps, { patchTanks })(TankContainer);
+export default connect(mapStateToProps, { patchTanks, push })(TankContainer);

@@ -14,6 +14,18 @@ const tanksReducer = (state = { tanks: [], requesting: false }, action) => {
                 tanks: action.tanks, 
                 requesting: false
             }
+        case 'START_FETCHING_SINGLE_TANK':
+            return {
+                ...state, 
+                tanks: {...state.tanks}, 
+                requesting: true
+            }
+        case 'FETCH_SINGLE_TANK':
+            return {
+                ...state, 
+                tanks: action.tanks, 
+                requesting: false
+            }
         case 'START_FETCHING_ALL_TANKS':
             return {
                 ...state, 

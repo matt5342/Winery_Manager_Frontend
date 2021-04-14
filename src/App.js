@@ -14,6 +14,7 @@ import TankMap from './components/TankMap';
 import WorkOrderList from './components/WorkOrderList';
 import fetchAllTanks from './actions/fetchAllTanks';
 import fetchLots from './actions/fetchLots';
+import SingleTank from './components/SingleTank';
 
 
 const store = configureStore(/* provide initial state if any */)
@@ -43,6 +44,7 @@ class App extends Component {
               <Route exact path='/tankmap' component={MainContainer} />
               <Route path='/section/' component={TankMap} />
               <Route path='/work_orders/' component={WorkOrderList} />
+              <Route path='/tank/' component={SingleTank} />
               <Route render={() => (<div>Miss</div>)} />
             </Switch>  
           </>

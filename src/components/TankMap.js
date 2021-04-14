@@ -16,9 +16,6 @@ class TankMap extends Component {
         let whichOpen = event.target.name + 'IsOpen'
         this.setState({ [whichOpen]: true })
     }
-    handleSubmitClose = name => {
-        this.setState({ [name]: false})
-    }
     
     handleClose = event => {
         if (event.target.name === undefined){
@@ -30,6 +27,9 @@ class TankMap extends Component {
         }
     }
     
+    handleSubmitClose = name => {
+        this.setState({ [name]: false})
+    }
     componentDidMount(){
         if (localStorage.getItem("token")){
             this.props.fetchTanks(this.props.section_id)

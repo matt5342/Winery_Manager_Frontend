@@ -50,58 +50,41 @@ body {
   margin: 0 50px;
 }
 
-/* .react-draggable, .cursor {
-  cursor: move;
-}
-.no-cursor {
-  cursor: auto;
-}
-.cursor-y {
-  cursor: ns-resize;
-}
-.cursor-x {
-  cursor: ew-resize;
-}
+/* Single Tank css: */
 
-.react-draggable strong {
-  background: #ddd;
-  border: 1px solid #999;
-  border-radius: 3px;
-  display: block;
-  margin-bottom: 10px;
-  padding: 3px 5px;
+
+
+.tank-shape {
+  width: 250px;
+  height: 500px;
+  background: grey;
+  border-radius: 10%;      
   text-align: center;
-
+  margin: auto;
+  position: fixed;
 }
-
-.box {
-  background: #fff;
-  border: 1px solid #999;
-  border-radius: 3px;
-  width: 180px;
-  height: 180px;
-  margin: 10px;
+.tank-content {
+  width: 100%;
+  /* height: 50%; */
+  /* top: 50%; */
+  /* background-color: red; */
+  border-radius: 10%;
+  text-align: center;
+  margin: auto;
+  position:relative;
+}
+.tank-info-box {
+  height: 200px;
+  width: 200px;
+  background-color: hotpink;
+  color: #fff;
   padding: 10px;
-  float: left;
+  border: solid 3px black;
+  margin-left: 400px;
 }
-.tank {
-  background: #fff;
-  border: 2px solid #999;
-  border-radius: 50%;
-  /* resize: both; */
-  /* width: 10vw; percent of container width
-  height: 10vw;
-  margin: 10px;
-  padding: 10px;
-  float: left;
-} */
-/* .no-pointer-events {
-  pointer-events: none;
-}
-.hovered {
-  background-color: gray;
-} */ */
 
+
+/*End Single Tank css */
 
 /*
  * RemWrapper needs to take it's styles from this element,

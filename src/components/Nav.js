@@ -66,7 +66,7 @@ class Nav extends Component {
 
         <Menu.Item
           name='log'
-          href='log'
+          href='/log'
           active={activeItem === 'log'}
           onClick={this.handleItemClick}
         >
@@ -75,7 +75,7 @@ class Nav extends Component {
 
         <Menu.Item
           name='inventory'
-          href='inventory'
+          href='/inventory'
           active={activeItem === 'inventory'}
           onClick={this.handleItemClick}
         >
