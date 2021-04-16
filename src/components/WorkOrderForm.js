@@ -31,7 +31,13 @@ class WorkOrderForm extends Component {
             {key: 'r', text: 'Rack', value: 'Rack'}
         ]
         const tankNames = []
-        this.props.tanks.tanks.map(tank => tankNames.push({key: tank.id, text: tank.name, value: tank}))
+        this.props.tanks.map(tank => tankNames.push({key: tank.id, text: tank.name, value: tank}))
+        let default_out_tank = null
+        if (this.props.tank){
+            default_out_tank = this.props.tanks.find(tank => tank.name === this.props.tank.name)
+            // debugger
+
+        }
         switch (this.state.step) {
             case "selectType":
                 return (
@@ -56,10 +62,11 @@ class WorkOrderForm extends Component {
                     return (
                         <div>
                         <Form style={{width: '300px'}} onSubmit={this.handleRackSubmit}>
+
                             <Form.Select 
                                 label='From Tank:' 
                                 options={tankNames}
-                                placeholder='Choose Tank...'
+                                placeholder={default_out_tank ? default_out_tank.name : 'Choose Tank...'}
                                 name='out_tank'
                                 onChange={this.handleChange}
                             />
@@ -118,7 +125,7 @@ class WorkOrderForm extends Component {
 const mapStateToProps = state => {
     // debugger
     return {
-        tanks: state.tanks,
+        tanks: state.tanks.tanks,
         section_id: state.router.location.pathname.split('/')[2]
     }
   }

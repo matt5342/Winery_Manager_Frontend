@@ -6,6 +6,9 @@ import postWorkOrder from '../actions/postWorkOrder'
 import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
 import TankContainer from './TankContainer';
 import WorkOrderForm from './WorkOrderForm';
+import { useFormik } from 'formik';
+import TankForm from './forms/TankForm.js';
+import LotForm from './forms/LotForm';
 
 class TankMap extends Component {
     state = {
@@ -35,8 +38,9 @@ class TankMap extends Component {
             this.props.fetchTanks(this.props.section_id)
         }
     }
-    handleTankSubmit = e => {
-        e.preventDefault()
+
+    handleTankSubmit = values => {
+        // e.preventDefault()
         this.setState({ tankIsOpen: false })
         let reqObj = {
             method: 'POST',
@@ -46,9 +50,9 @@ class TankMap extends Component {
             },
             body: JSON.stringify({
                 tank: {
-                    name: this.state.name, 
-                    volume: this.state.volume, 
-                    material: this.state.material, 
+                    name: values.name, 
+                    volume: values.volume, 
+                    material: values.material, 
                     status: "Clean",
                     xaxis: 18, 
                     yaxis: 2, 
@@ -60,72 +64,29 @@ class TankMap extends Component {
         fetch('http://localhost:3000/section/' + this.props.section_id + '/new_tank', reqObj)
         .then(r => r.json())
         .then(data => {
-            this.props.fetchTanks(this.props.section_id)
+            if (Object.keys(data).includes("error")) {
+                debugger
+            }
+            else{
+                this.props.fetchTanks(this.props.section_id)
+            }
         }) 
     }
-    handleLotSubmit = () => {
+
+    handleLotSubmit = values => {
+        // debugger
         this.setState({ lotIsOpen: false })
         let attributes = { 
-            name: this.state.name,
-            color: this.state.color,
-            vintage: this.state.vintage, 
-            volume: this.state.lotVolume, 
-            tank_id: this.state.tank_id, 
+            name: values.name,
+            color: values.color,
+            vintage: values.vintage, 
+            volume: values.lotVolume, 
+            tank_id: values.tank_id, 
             section_id: this.props.section_id
         }
         this.props.postLot(attributes)
     }
-    renderTankForm = () => {
-        const materials = [
-            {key: 's', text: 'Stainless Steel', value: 'Stainless Steel'}, 
-            {key: 'c', text: 'Concrete', value: 'Concrete'}, 
-            {key: 'o', text: 'Oak', value: 'Oak'}, 
-            {key: 'p', text: 'Plastic', value: 'Plastic'}, 
-            {key: 'a', text: 'Amphora', value: 'Amphora'}, 
-            {key: 'g', text: 'Glass', value: 'Glass'}, 
-            {key: '*', text: 'Other', value: 'Other'}
-        
-        ]
-        return (
-            <div>
-                <Form style={{width: '300px'}} onSubmit={this.handleTankSubmit}>
-                    <Form.Field
-                        style={{width: '300px'}}
-                        id='form-input-control-name'
-                        control={Input}
-                        label='Name:'
-                        name='name'
-                        placeholder='Tank Name'
-                        className='eight wide field'
-                        onChange={this.handleChange}
-                    />
-                    <Form.Field
-                        style={{width: '300px'}}
-                        id='form-input-control-name'
-                        control={Input}
-                        label='Volume:'
-                        name='volume'
-                        placeholder='Volume (L)'
-                        className='eight wide field'
-                        onChange={this.handleChange}
-                    />
-                    <Form.Select 
-                        label='Material:' 
-                        options={materials}
-                        placeholder='Choose Material...'
-                        name='material'
-                        onChange={this.handleChange}
-                    />
-                    <Form.Field
-                        id='form-button-control-public'
-                        control={Button}
-                        content='Create'
-                    /> 
-                </Form>
-            </div>
-        )
-        
-    }
+
     renderLotForm = () => {
         const colors = [
             {key: 'r', text: 'Red', value: 'Red'}, 
@@ -133,7 +94,7 @@ class TankMap extends Component {
             {key: 's', text: 'Rosé', value: 'Rosé'}, 
         ]
         const tankNames = []
-        this.props.tanks.tanks.map(tank => tankNames.push({key: tank.id, text: tank.name, value: tank.id}))
+        this.props.tanks.map(tank => tankNames.push({key: tank.id, text: tank.name, value: tank.id}))
         return (
             <div>
                 <Form style={{width: '300px'}} onSubmit={this.handleLotSubmit}>
@@ -192,7 +153,7 @@ class TankMap extends Component {
     }
 
     checkForTanks = () => {
-        if (Object.keys(this.props.tanks.tanks).includes("error")){
+        if (Object.keys(this.props.tanks).includes("error")){
             return (
                 <div>
                     <Message>
@@ -202,7 +163,7 @@ class TankMap extends Component {
                         </p>
                         <Popup
                             trigger={ <Button name='tank' color='grey' content="Create A Tank"/> }
-                            content={this.renderTankForm()}
+                            content={ <TankForm handleTankSubmit={this.handleTankSubmit} /> }
                             on='click'
                             open={this.state.tankIsOpen}
                             onClose={this.handleClose}
@@ -214,12 +175,12 @@ class TankMap extends Component {
                 </div>
             ) 
         }
-        else if (Array.isArray(this.props.tanks.tanks)) {
+        else if (Array.isArray(this.props.tanks)) {
             return (
                 <div>
                     <Popup
                         trigger={ <Button name='tank' color='grey' content="Add A Tank"/> }
-                        content={this.renderTankForm()}
+                        content={ <TankForm handleTankSubmit={this.handleTankSubmit} /> }
                         on='click'
                         open={this.state.tankIsOpen}
                         onClose={this.handleClose}
@@ -229,7 +190,7 @@ class TankMap extends Component {
                     />
                     <Popup
                         trigger={ <Button name='lot' color='grey' content="New Lot"/> }
-                        content={this.renderLotForm()}
+                        content={ <LotForm tanks={this.props.tanks} handleLotSubmit={this.handleLotSubmit} /> }
                         on='click'
                         open={this.state.lotIsOpen}
                         onClose={this.handleClose}
@@ -265,9 +226,11 @@ class TankMap extends Component {
 const mapStateToProps = state => {
     // debugger
     return {
-        tanks: state.tanks,
+        tanks: state.tanks.tanks,
         section_id: state.router.location.pathname.split('/')[2]
     }
-  }
+}
+
 
 export default connect(mapStateToProps, { fetchTanks, postLot, postWorkOrder })(TankMap);
+

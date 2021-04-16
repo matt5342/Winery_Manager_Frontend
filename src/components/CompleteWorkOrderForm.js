@@ -39,7 +39,6 @@ class CompleteWorkOrderForm extends Component {
                                 label='Recieval Tank:' 
                                 options={tankNames}
                                 placeholder={default_recieval_tank.name}
-                                // value={default_recieval_tank.name}
                                 name='in_tank'
                                 onChange={this.handleChange}
                             />

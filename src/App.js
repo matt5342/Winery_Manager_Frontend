@@ -25,8 +25,8 @@ class App extends Component {
     if(localStorage.getItem("token")){
       this.props.fetchUser()
       this.props.fetchWorkOrders()
-      this.props.fetchAllTanks()
-      this.props.fetchLots()
+      // this.props.fetchAllTanks()
+      // this.props.fetchLots()
     }
   }
 

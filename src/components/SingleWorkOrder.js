@@ -7,7 +7,7 @@ class SingleWorkOrder extends Component {
     state={
 
     }
-    
+    // Add a sort!
     handleOpen = event => {
         let whichOpen = event.target.name + 'IsOpen'
         this.setState({ [whichOpen]: true })
@@ -24,12 +24,14 @@ class SingleWorkOrder extends Component {
     }
     render() {
         const { workOrder } = this.props
-
+        let date;
+        workOrder.status === "Initialized" ? date = new Date(workOrder.created_at) : date = new Date(workOrder.updated_at)
+        // debugger
         return (
             <Card key={workOrder.id} >
                 <Card.Content>
                     <Card.Header>{workOrder.name}</Card.Header>
-                    <Card.Meta>{workOrder.status}</Card.Meta>
+                    <Card.Meta>{workOrder.status + " on " + date.toDateString()}</Card.Meta>
                     <Card.Description>{workOrder.notes}</Card.Description>
                     <Card.Description>From Tank: {workOrder.out_tank}</Card.Description>
                     <Card.Description>To Tank: {workOrder.in_tank}</Card.Description>

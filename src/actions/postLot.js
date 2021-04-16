@@ -2,9 +2,7 @@ import fetchTanks from "./fetchTanks"
 import fetchLots from "./fetchLots"
 
 export default function postLot(attributes) {
-    // debugger
     return (dispatch) => {
-        dispatch({ type: "POST_LOT" })
         let reqObj = {
             method: 'POST',
             headers: {
@@ -23,11 +21,9 @@ export default function postLot(attributes) {
         }
         fetch('http://localhost:3000/lots/' + attributes.tank_id, reqObj)
         .then(r => r.json())
-        .then(data => {
-            // debugger
-            fetchLots()
-            fetchTanks(attributes.section_id)
-        }) 
+        .then(lot => {
+            dispatch({ type: 'POST_LOT', lot })
+        }).then(dispatch(fetchTanks(attributes.section_id))) 
     }
 
 }

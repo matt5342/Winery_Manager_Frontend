@@ -14,10 +14,11 @@ const lotsReducer = (state = { lots: [], requesting: false }, action) => {
                 lots: action.lots, 
                 requesting: false
             }
-        case 'POST_LOTS': 
+        case 'POST_LOT': 
+            // debugger
             return {
                 ...state, 
-                lots: action.lots, 
+                lots: state.lots.push(action.lot),
                 requesting: false
             }
         default:

@@ -35,7 +35,6 @@ class SingleTank extends Component {
     }
     
     componentDidMount(){
-        // debugger
         if (localStorage.getItem("token")){
             this.props.fetchAllTanks()
         }
@@ -119,14 +118,12 @@ class SingleTank extends Component {
         )
     }
     renderSingleTank = () => {
-        // debugger
         let tank = {}
         tank = this.props.tanks.find(tank => tank.id === parseInt(this.props.tank_id))
         let colorCode = 'grey';
         let volume = 0;
         let lotName = 'None';
         let openWorkOrders = []
-        // debugger
         if (tank.lots){
             if(tank.lots.length > 0){
                 tank.lots.forEach(lot => {
@@ -142,7 +139,6 @@ class SingleTank extends Component {
                         }
                     })
                 }
-
                 switch (tank.lots[0].color) {
                     case "Red":
                         colorCode = "rgba(122, 36, 72, 0.822)"
@@ -157,14 +153,12 @@ class SingleTank extends Component {
                         colorCode = "grey"
                         break;
                 }
-
             }
         }
         let percentFilled = volume / tank.volume * 100
         let percentEmpty = 100 - percentFilled
         percentFilled = percentFilled.toString() + '%'
         percentEmpty = percentEmpty.toString() + '%'
-        // debugger
 
         return (
             <div>
@@ -175,7 +169,16 @@ class SingleTank extends Component {
                          >
                     </div>
                 </div>
-
+                <Popup
+                        trigger={ <Button name='workOrder' data-id={tank.id} color='grey' content="New Work Order"/> }
+                        content={<WorkOrderForm  tank={tank} handleSubmitClose={this.handleSubmitClose} />}
+                        on='click'
+                        open={this.state.workOrderIsOpen}
+                        onClose={this.handleClose}
+                        onOpen={this.handleOpen}
+                        position='bottom center'
+                        width={8}
+                    />
                 <Table align='center' style={{margin: '0 auto'}} collapsing striped>
                     <Table.Header>
                         <Table.Row>
@@ -188,16 +191,20 @@ class SingleTank extends Component {
                             <Table.Cell>{tank.status}</Table.Cell>
                         </Table.Row> */}
                         <Table.Row>
-                            <Table.Cell>Size</Table.Cell>
+                            <Table.Cell>Lot</Table.Cell>
+                            <Table.Cell>{lotName}</Table.Cell>
+                        </Table.Row>
+                        <Table.Row>
+                            <Table.Cell>Current Volume </Table.Cell>
+                            <Table.Cell>{volume} L</Table.Cell>
+                        </Table.Row>
+                        <Table.Row>
+                            <Table.Cell>Tank Capacity</Table.Cell>
                             <Table.Cell>{tank.volume} L</Table.Cell>
                         </Table.Row>
                         <Table.Row>
                             <Table.Cell>Material</Table.Cell>
                             <Table.Cell>{tank.material}</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>Lot</Table.Cell>
-                            <Table.Cell>{lotName}</Table.Cell>
                         </Table.Row>
                     </Table.Body>
                     {openWorkOrders.length > 0 ? 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Input, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import fetchUser from '../actions/fetchUser'
+import { push } from 'connected-react-router'
 
 class LogIn extends Component {
     state = {}
@@ -29,6 +30,7 @@ class LogIn extends Component {
     .then(data => {
             localStorage.setItem("token", data.jwt)
             this.props.fetchUser()
+            this.props.push('/tankmap')
             // this.props.setUser(data.user)
             // this.props.changeView('home')
         }) 
@@ -62,6 +64,7 @@ class LogIn extends Component {
                 id='form-button-control-public'
                 control={Button}
                 content='Log In'
+                // href='/tankmap'
                 // label='Label with htmlFor'
                 />    
         </Form>
@@ -69,4 +72,4 @@ class LogIn extends Component {
     }
 }
 
-export default connect(null, { fetchUser })(LogIn)
+export default connect(null, { fetchUser, push })(LogIn)

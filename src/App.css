@@ -73,15 +73,7 @@ body {
   margin: auto;
   position:relative;
 }
-.tank-info-box {
-  height: 200px;
-  width: 200px;
-  background-color: hotpink;
-  color: #fff;
-  padding: 10px;
-  border: solid 3px black;
-  margin-left: 400px;
-}
+
 
 
 /*End Single Tank css */

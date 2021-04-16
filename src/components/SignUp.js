@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Form, Input, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import fetchUser from '../actions/fetchUser'
+import { push } from 'connected-react-router'
+
 
 class SignUpForm extends Component {
     state = {}
@@ -29,6 +31,7 @@ class SignUpForm extends Component {
     .then(data => {
             localStorage.setItem("token", data.jwt)
             this.props.fetchUser()
+            this.props.push('/tankmap')
         }) 
 }
 
@@ -90,4 +93,4 @@ class SignUpForm extends Component {
         )
     }
 }
-export default connect(null, { fetchUser })(SignUpForm)
+export default connect(null, { fetchUser, push })(SignUpForm)
