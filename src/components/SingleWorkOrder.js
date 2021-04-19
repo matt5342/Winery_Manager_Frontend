@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Popup, Form, Input, Message, Button } from 'semantic-ui-react'
-import CompleteWorkOrderForm from './CompleteWorkOrderForm';
+import CompleteWorkOrderForm from './forms/CompleteWorkOrderForm';
 
 
 class SingleWorkOrder extends Component {

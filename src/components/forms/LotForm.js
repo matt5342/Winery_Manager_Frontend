@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Formik, useField } from 'formik';
 import * as Yup from 'yup';
-import { Form, Input, Button, Select } from 'semantic-ui-react'
+import { Form, Input, Button } from 'semantic-ui-react'
 
 
 export default class LotForm extends Component {

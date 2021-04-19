@@ -1,7 +1,9 @@
+import fetchAllTanks from "./fetchAllTanks"
+
 export default function postWorkOrder(attributes) {
     return (dispatch) => {
         // debugger
-        dispatch({ type: "POST_WORK_ORDER" })
+        
         let reqObj = {
             method: 'POST',
             headers: {
@@ -20,6 +22,8 @@ export default function postWorkOrder(attributes) {
             })
         }
         fetch('http://localhost:3000/work_order/', reqObj)
+        .then(dispatch({ type: "POST_WORK_ORDER" }))
+        .then(dispatch(fetchAllTanks())) 
     }
 
 }

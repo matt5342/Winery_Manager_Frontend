@@ -56,12 +56,20 @@ class Nav extends Component {
     return (
       <Menu pointing>
         <Menu.Item
-          name='tankmap'
-          href='/tankmap'
-          active={activeItem === 'tankmap'}
+          name='home'
+          href='/home'
+          active={activeItem === 'home'}
           onClick={this.handleItemClick}
         >
-          Tank Map
+          Home
+        </Menu.Item>
+        <Menu.Item
+          name='sections'
+          href='/sections'
+          active={activeItem === 'sections'}
+          onClick={this.handleItemClick}
+        >
+          Sections
         </Menu.Item>
 
         <Menu.Item

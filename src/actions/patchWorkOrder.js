@@ -1,6 +1,11 @@
+import fetchAllTanks from "./fetchAllTanks"
+import TriggerModalMessage from "../components/TriggerModalMessage"
+import { render } from "react-dom"
+
+
 export default function patchWorkOrder(attributes) {
     return (dispatch) => {
-        dispatch({ type: "PATCH_WORK_ORDER"})
+        // debugger
             let reqObj = {
                 method: 'PATCH',
                 headers: {
@@ -15,10 +20,18 @@ export default function patchWorkOrder(attributes) {
                 })
             }
             fetch('http://localhost:3000/work_orders/' + attributes.work_order_id, reqObj)
-            // .then(r => r.json())
-            // .then(tank => {
-            //     debugger
-            // })
-    }
+            .then(r => r.json())
+            .then(workOrder => {
+                // debugger
+                if (Object.keys(workOrder).includes("message")){
 
+                    render(<TriggerModalMessage message={workOrder.message} />, 
+                        document.getElementById("single-tank")) 
+                }
+                else {
+                    dispatch({ type: "PATCH_WORK_ORDER", workOrder })
+                }
+            })
+            .then(dispatch(fetchAllTanks())) 
+    }
 }

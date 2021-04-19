@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Nav from './components/Nav'
-import SignUpForm from './components/SignUp'
+import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router' // react-router v4/v5
@@ -15,6 +15,7 @@ import WorkOrderList from './components/WorkOrderList';
 import fetchAllTanks from './actions/fetchAllTanks';
 import fetchLots from './actions/fetchLots';
 import SingleTank from './components/SingleTank';
+import Home from './components/Home';
 
 
 const store = configureStore(/* provide initial state if any */)
@@ -39,9 +40,10 @@ class App extends Component {
             <Nav />
             <Switch>
               {/* <Route exact path='/'  /> */}
-              <Route exact path='/signup' component={SignUpForm} />
+              <Route exact path='/home' component={Home} />
+              <Route exact path='/signup' component={SignUp} />
               <Route exact path='/login' component={LogIn} />
-              <Route exact path='/tankmap' component={MainContainer} />
+              <Route exact path='/sections' component={MainContainer} />
               <Route path='/section/' component={TankMap} />
               <Route path='/work_orders/' component={WorkOrderList} />
               <Route path='/tank/' component={SingleTank} />

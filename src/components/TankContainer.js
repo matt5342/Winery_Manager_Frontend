@@ -22,8 +22,8 @@ class TankContainer extends Component {
             let colorCode = 'grey';
             let lotName = null
             if (tank.lots){
-                // debugger
                 if (tank.lots.length > 0){
+                    // debugger
                     lotName = tank.lots[0].name
                     switch (tank.lots[0].color) {
                         case "Red":

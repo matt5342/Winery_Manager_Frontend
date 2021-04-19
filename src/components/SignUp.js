@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import fetchUser from '../actions/fetchUser'
 import { push } from 'connected-react-router'
+import SignUpForm from './forms/SignUpForm';
+import { Modal } from 'semantic-ui-react';
 
 
-class SignUpForm extends Component {
-    state = {}
+class SignUp extends Component {
+    state = {
+        modalOpen: false, 
+        modalContent: ''
+    }
   
-    handleChange = (e, { name, value }) => this.setState({ [name]: value })
+    // handleChange = (e, { name, value }) => this.setState({ [name]: value })
   
-    handleSubmit = (e) => {
-    e.preventDefault()
+    handleSubmit = values => {
+
     let reqObj = {
         method: 'POST',
         headers: {
@@ -19,78 +24,47 @@ class SignUpForm extends Component {
         },
         body: JSON.stringify({
             owner: {
-                username: this.state.username,
-                password: this.state.password, 
-                email: this.state.email,
-                winery_name: this.state.winery_name
+                username: values.username,
+                password: values.password, 
+                email: values.email,
+                winery_name: values.winery_name
             }
         })
     }
     fetch('http://localhost:3000/signup', reqObj)
     .then(r => r.json())
     .then(data => {
+        // debugger
+        if (Object.keys(data).includes("email")) {
+            // debugger
+            this.setState({modalOpen: true, modalContent: data.email[0]})
+        }
+        else if (Object.keys(data).includes("username")) {
+            // debugger
+            this.setState({modalOpen: true, modalContent: data.username[0]})
+        }
+        else {
             localStorage.setItem("token", data.jwt)
             this.props.fetchUser()
-            this.props.push('/tankmap')
+            this.props.push('/home')
+        }
         }) 
 }
 
     render() {
-        const { name, email } = this.state
-
         return(
-            <Form onSubmit={this.handleSubmit}>
-                <Form.Field
-                id='form-input-control-error-email'
-                control={Input}
-                type='email'
-                name='email'
-                label='Email'
-                placeholder='winemaker@winery.com'
-                className='eight wide field'
-                onChange={this.handleChange}
-                // error={{
-                //     content: 'Please enter a valid email address',
-                //     pointing: 'below',
-                // }}
-                />
-                <Form.Field
-                    id='form-input-control-name'
-                    control={Input}
-                    label='Winery Name'
-                    name='winery_name'
-                    placeholder='Reserve Estates'
-                    className='eight wide field'
-                    onChange={this.handleChange}
-                />
-                <Form.Field
-                    id='form-input-control-username'
-                    control={Input}
-                    label='Username'
-                    name='username'
-                    placeholder='Username'
-                    className='eight wide field'
-                    onChange={this.handleChange}
-                />
-                <Form.Field
-                    id='form-input-control-password'
-                    control={Input}
-                    type='password'
-                    name='password'
-                    label='Password'
-                    placeholder='Password'
-                    className='eight wide field'
-                    onChange={this.handleChange}
-                />
-                <Form.Field
-                id='form-button-control-public'
-                control={Button}
-                content='Sign Up'
-                // href='tankmap'
-                // label='Label with htmlFor'
-                />    
-        </Form>
+            <div>
+                <Header>Sign Up</Header>
+                {<SignUpForm handleSubmit={this.handleSubmit} />}
+                {
+                    <Modal size='mini' open={this.state.modalOpen} content={this.state.modalContent}
+                            header='Invalid'
+                            actions={[{ key: 'dismiss', content: 'Dismiss', positive: true}]}
+                            onClose={() => this.setState({modalOpen: false})}
+                    />
+                }
+            </div>
         )
     }
 }
-export default connect(null, { fetchUser, push })(SignUpForm)
+export default connect(null, { fetchUser, push })(SignUp)

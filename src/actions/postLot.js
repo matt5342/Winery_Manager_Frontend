@@ -1,5 +1,8 @@
 import fetchTanks from "./fetchTanks"
 import fetchLots from "./fetchLots"
+import TriggerModalMessage from "../components/TriggerModalMessage"
+import { render } from "react-dom"
+
 
 export default function postLot(attributes) {
     return (dispatch) => {
@@ -22,7 +25,14 @@ export default function postLot(attributes) {
         fetch('http://localhost:3000/lots/' + attributes.tank_id, reqObj)
         .then(r => r.json())
         .then(lot => {
-            dispatch({ type: 'POST_LOT', lot })
+            // debugger
+            if (Object.keys(lot).includes("message")){
+                render(<TriggerModalMessage message={lot.message} />, 
+                    document.getElementById("tank-map")) 
+            }
+            else {
+                dispatch({ type: 'POST_LOT', lot })
+            }
         }).then(dispatch(fetchTanks(attributes.section_id))) 
     }
 

@@ -18,7 +18,7 @@ const lotsReducer = (state = { lots: [], requesting: false }, action) => {
             // debugger
             return {
                 ...state, 
-                lots: state.lots.push(action.lot),
+                lots: action.lot,
                 requesting: false
             }
         default:

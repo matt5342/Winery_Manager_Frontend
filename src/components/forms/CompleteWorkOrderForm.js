@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import postWorkOrder from '../actions/postWorkOrder'
+import postWorkOrder from '../../actions/postWorkOrder'
 import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
-import patchWorkOrder from '../actions/patchWorkOrder';
+import patchWorkOrder from '../../actions/patchWorkOrder';
 
 
 
@@ -17,10 +17,12 @@ class CompleteWorkOrderForm extends Component {
     handleCompleteSubmit = () => {
         // debugger
         // this.props.handleSubmitClose("workOrderIsOpen")
+        // const out_tank = this.props.tanks.find(tank => tank.name === this.props.workOrder.out_tank)
         let attributes = { 
             work_order_id: this.props.workOrder.id, 
             final_volume: this.state.final_volume, 
-            in_tank: this.state.in_tank
+            in_tank: this.state.in_tank,
+            // out_tank: out_tank.id
         }
         this.props.patchWorkOrder(attributes)
     }
@@ -30,7 +32,12 @@ class CompleteWorkOrderForm extends Component {
         ]
         const tankNames = []
         // debugger
-        const default_recieval_tank = this.props.tanks.find(tank => tank.name === this.props.workOrder.in_tank)
+        // const default_recieval_tank = null
+        // if (this.props.workOrder){
+
+        // }
+        // default_recieval_tank = this.props.tanks.find(tank => tank.name === this.props.workOrder.in_tank)
+        // const default_out_tank
         this.props.tanks.map(tank => tankNames.push({key: tank.id, text: tank.name, value: tank}))
                     return (
                         <div>
@@ -38,7 +45,7 @@ class CompleteWorkOrderForm extends Component {
                             <Form.Select 
                                 label='Recieval Tank:' 
                                 options={tankNames}
-                                placeholder={default_recieval_tank.name}
+                                placeholder={this.state.in_tank}
                                 name='in_tank'
                                 onChange={this.handleChange}
                             />
@@ -81,7 +88,7 @@ class CompleteWorkOrderForm extends Component {
     render(){
         return(
             <div>
-                {this.renderCompleteForm()}
+                {Array.isArray(this.props.tanks) ? this.renderCompleteForm() : null}
             </div>
         )
     }

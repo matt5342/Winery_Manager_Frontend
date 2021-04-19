@@ -5,7 +5,7 @@ import postLot from '../actions/postLot'
 import postWorkOrder from '../actions/postWorkOrder'
 import { Popup, Header, Table, Modal, Form, TextArea, Input, Message, Button, Card } from 'semantic-ui-react'
 import TankContainer from './TankContainer';
-import WorkOrderForm from './WorkOrderForm';
+import WorkOrderForm from './forms/WorkOrderForm';
 import fetchAllTanks from '../actions/fetchAllTanks';
 import SingleWorkOrder from './SingleWorkOrder';
 
@@ -229,7 +229,7 @@ class SingleTank extends Component {
 
     render(){
         return(
-            <div>
+            <div id='single-tank'>
                 {Array.isArray(this.props.tanks) ? 
                     this.props.tanks.length > 0 ? this.renderSingleTank() : null
                     : null}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import postWorkOrder from '../actions/postWorkOrder'
+import postWorkOrder from '../../actions/postWorkOrder'
 import { Popup, Modal, Form, TextArea, Input, Message, Button } from 'semantic-ui-react'
 
 
@@ -34,9 +34,11 @@ class WorkOrderForm extends Component {
         this.props.tanks.map(tank => tankNames.push({key: tank.id, text: tank.name, value: tank}))
         let default_out_tank = null
         if (this.props.tank){
-            default_out_tank = this.props.tanks.find(tank => tank.name === this.props.tank.name)
             // debugger
-
+            default_out_tank = this.props.tank
+            if (!this.state.out_tank){
+                this.setState({out_tank: this.props.tank})
+            }
         }
         switch (this.state.step) {
             case "selectType":

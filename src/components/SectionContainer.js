@@ -11,8 +11,8 @@ class SectionContainer extends Component {
         return this.props.sections.map(section => {
             return (
                 <Card
-                    image={default_section.default}
                     header={section.name}
+                    image={default_section.default}
                     key={section.id}
                     href={`/section/${section.id}`}
                 />
