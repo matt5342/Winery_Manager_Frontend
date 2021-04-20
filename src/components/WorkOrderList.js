@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import fetchSections from '../actions/fetchSections'
-// let default_section = require(`../assets/default_winery_photo.jpg`) 
-import { Card, Header, Dropdown, Popup, Form, Input, Message, Button } from 'semantic-ui-react'
+import { Card, Header, Dropdown } from 'semantic-ui-react'
 import fetchWorkOrders from '../actions/fetchWorkOrders';
-import CompleteWorkOrderForm from './forms/CompleteWorkOrderForm';
 import SingleWorkOrder from './SingleWorkOrder';
 
 
@@ -17,40 +14,51 @@ class WorkOrderList extends Component {
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
     workOrderSort = () => {
-        let noResults = 0;
+
+        const workOrdersSortedByDateInitialized = this.props.workOrders.sort((a, b) => {
+            if(a.created_at > b.created_at){
+                return -1
+            }
+            else if(a.created_at < b.created_at){
+                return 1
+            }
+            else {return 0}
+        }
+        )
+        let noResults = true;
+        let results;
+        // debugger
         if (this.state.sort === 'All'){
             if (this.props.workOrders.length > 0){
-                return this.props.workOrders.map(workOrder => <SingleWorkOrder workOrder={workOrder} />)
+                return workOrdersSortedByDateInitialized.map(workOrder => <SingleWorkOrder workOrder={workOrder} />)
             }
             else {
                 return <p>No Work Orders yet.</p>
             }
         }
         if (this.state.sort === 'Initialized'){
-            return this.props.workOrders.map(workOrder => {
+            results = workOrdersSortedByDateInitialized.map(workOrder => {
                 if (workOrder.status === 'Initialized'){
+                    noResults = false
                     return <SingleWorkOrder workOrder={workOrder} />
                 }
-                else {
-                    if (noResults === 0){
-                        noResults = 1
-                        return <p>No {this.state.sort} Work Orders.</p>
-                    }
-                }
             })
+            if (noResults === true){
+                return <p>No {this.state.sort} Work Orders.</p>
+            }
+            else{ return results; }
         }
         if (this.state.sort === 'Completed'){
-            return this.props.workOrders.map(workOrder => {
+            results = workOrdersSortedByDateInitialized.map(workOrder => {
                 if (workOrder.status === 'Completed'){
+                    noResults = false
                     return <SingleWorkOrder workOrder={workOrder} />
                 }
-                else {
-                    if (noResults === 0){
-                        noResults = 1
-                        return <p>No {this.state.sort} Work Orders.</p>
-                    }
-                }
             })
+            if (noResults === true){
+                return <p>No {this.state.sort} Work Orders.</p>
+            }
+            else{ return results; }
         }
     }
     

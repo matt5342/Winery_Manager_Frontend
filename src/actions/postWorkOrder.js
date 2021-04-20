@@ -1,6 +1,6 @@
 import { render } from "react-dom"
 import TriggerModalMessage from "../components/TriggerModalMessage"
-import fetchAllTanks from "./fetchAllTanks"
+import fetchTanks from "./fetchTanks"
 
 
 export default function postWorkOrder(attributes) {
@@ -42,7 +42,7 @@ export default function postWorkOrder(attributes) {
                 dispatch({ type: "POST_WORK_ORDER", workOrder })
             }
         })
-        .then(dispatch(fetchAllTanks())) 
+        .then(dispatch(fetchTanks(attributes.section_id))) 
     }
 
 }

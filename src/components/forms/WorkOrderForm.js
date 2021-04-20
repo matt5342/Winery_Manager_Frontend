@@ -22,7 +22,8 @@ class WorkOrderForm extends Component {
             out_tank: this.state.out_tank.name, 
             in_tank: this.state.in_tank.name, 
             notes: this.state.notes,
-            status: 'Initialized'
+            status: 'Initialized', 
+            section_id: this.state.out_tank.section_id
         }
         this.props.postWorkOrder(attributes)
     }
@@ -34,7 +35,8 @@ class WorkOrderForm extends Component {
             out_tank: this.state.out_tank.name, 
             in_tank: null, 
             notes: this.state.notes,
-            status: 'Initialized'
+            status: 'Initialized', 
+            section_id: this.state.out_tank.section_id
         }
         this.props.postWorkOrder(attributes)
     }
