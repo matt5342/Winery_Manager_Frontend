@@ -43,6 +43,7 @@ class MainContainer extends Component {
 
     handleSectionSubmit = e => {
         e.preventDefault()
+        this.setState({sectionIsOpen: false})
         let reqObj = {
             method: 'POST',
             headers: {

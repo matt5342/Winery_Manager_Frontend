@@ -33,8 +33,16 @@ class SingleWorkOrder extends Component {
                     <Card.Header>{workOrder.name}</Card.Header>
                     <Card.Meta>{workOrder.status + " on " + date.toDateString()}</Card.Meta>
                     <Card.Description>{workOrder.notes}</Card.Description>
-                    <Card.Description>From Tank: {workOrder.out_tank}</Card.Description>
-                    <Card.Description>To Tank: {workOrder.in_tank}</Card.Description>
+                    {workOrder.name === "Rack" ?
+                        <> 
+                        <Card.Description>From Tank: {workOrder.out_tank}</Card.Description>
+                        <Card.Description>To Tank: {workOrder.in_tank}</Card.Description>
+                        </>
+                    :   workOrder.name === "Addition" ?
+                        <>
+                        <Card.Description>Into Tank: {workOrder.out_tank}</Card.Description>
+                        </> :
+                    null}
                 </Card.Content >
                 {workOrder.status === 'Initialized' ?
                     <Card.Content>

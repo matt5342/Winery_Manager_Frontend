@@ -2,6 +2,7 @@ import fetchTanks from "./fetchTanks"
 import fetchLots from "./fetchLots"
 import TriggerModalMessage from "../components/TriggerModalMessage"
 import { render } from "react-dom"
+import fetchAllTanks from "./fetchAllTanks"
 
 
 export default function postLot(attributes) {
@@ -33,7 +34,8 @@ export default function postLot(attributes) {
             else {
                 dispatch({ type: 'POST_LOT', lot })
             }
-        }).then(dispatch(fetchTanks(attributes.section_id))) 
+        })
+        .then(dispatch(fetchTanks(attributes.section_id))) 
     }
 
 }

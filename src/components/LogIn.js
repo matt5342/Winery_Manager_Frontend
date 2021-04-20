@@ -12,6 +12,7 @@ class LogIn extends Component {
     }
 
     handleSubmit = values => {
+        // debugger
         let reqObj = {
             method: 'POST',
             headers: {
@@ -38,6 +39,7 @@ class LogIn extends Component {
                     this.props.push('/home')
                 }
             }) 
+
         }
         
         render() {

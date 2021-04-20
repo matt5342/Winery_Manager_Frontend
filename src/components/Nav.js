@@ -19,7 +19,7 @@ class Nav extends Component {
             </Menu.Item>
             <Menu.Item
               name='logout'
-              href='/login'
+              href='/home'
               onClick={this.handleLogout}
               >
               Logout
@@ -72,7 +72,7 @@ class Nav extends Component {
           Sections
         </Menu.Item>
 
-        <Menu.Item
+        {/* <Menu.Item
           name='log'
           href='/log'
           active={activeItem === 'log'}
@@ -88,7 +88,7 @@ class Nav extends Component {
           onClick={this.handleItemClick}
         >
           Inventory
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item
           name='workOrders'
           href='/work_orders'

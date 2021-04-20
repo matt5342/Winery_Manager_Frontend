@@ -47,7 +47,7 @@ class App extends Component {
               <Route path='/section/' component={TankMap} />
               <Route path='/work_orders/' component={WorkOrderList} />
               <Route path='/tank/' component={SingleTank} />
-              <Route render={() => (<div>Miss</div>)} />
+              <Route render={() => <Home />} />
             </Switch>  
           </>
         </ConnectedRouter>

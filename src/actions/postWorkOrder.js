@@ -1,9 +1,10 @@
+import { render } from "react-dom"
+import TriggerModalMessage from "../components/TriggerModalMessage"
 import fetchAllTanks from "./fetchAllTanks"
+
 
 export default function postWorkOrder(attributes) {
     return (dispatch) => {
-        // debugger
-        
         let reqObj = {
             method: 'POST',
             headers: {
@@ -22,7 +23,25 @@ export default function postWorkOrder(attributes) {
             })
         }
         fetch('http://localhost:3000/work_order/', reqObj)
-        .then(dispatch({ type: "POST_WORK_ORDER" }))
+        .then(r => r.json())
+        .then(workOrder => {
+            let messageElement;
+            if (document.getElementById('tank-map')){
+                messageElement = document.getElementById('tank-map')
+            }
+            else if (document.getElementById('single-tank')){
+                messageElement = document.getElementById('single-tank')
+            } 
+            else {messageElement = document.getElementById('work-order-list')}
+
+            if (Object.keys(workOrder).includes("message")){
+                render(<TriggerModalMessage message={workOrder.message} />, 
+                    messageElement) 
+            }
+            else {
+                dispatch({ type: "POST_WORK_ORDER", workOrder })
+            }
+        })
         .then(dispatch(fetchAllTanks())) 
     }
 

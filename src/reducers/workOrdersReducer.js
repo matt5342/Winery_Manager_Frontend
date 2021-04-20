@@ -20,7 +20,7 @@ const workOrdersReducer = (state = { workOrders: [], requesting: false }, action
                 workOrders: action.workOrders, 
                 requesting: false
             }
-        case 'PATCH_WORK_ORDERS': 
+        case 'PATCH_WORK_ORDER': 
             return {
                 ...state, 
                 workOrders: action.workOrder, 

@@ -12,31 +12,44 @@ import SingleWorkOrder from './SingleWorkOrder';
 class WorkOrderList extends Component {
     state = {
         sort: 'All', 
-
     }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
     workOrderSort = () => {
+        let noResults = 0;
         if (this.state.sort === 'All'){
-            return this.props.workOrders.map(workOrder => <SingleWorkOrder workOrder={workOrder} />)
+            if (this.props.workOrders.length > 0){
+                return this.props.workOrders.map(workOrder => <SingleWorkOrder workOrder={workOrder} />)
+            }
+            else {
+                return <p>No Work Orders yet.</p>
+            }
         }
         if (this.state.sort === 'Initialized'){
             return this.props.workOrders.map(workOrder => {
-                // debugger
                 if (workOrder.status === 'Initialized'){
                     return <SingleWorkOrder workOrder={workOrder} />
                 }
-                else {return null}
+                else {
+                    if (noResults === 0){
+                        noResults = 1
+                        return <p>No {this.state.sort} Work Orders.</p>
+                    }
+                }
             })
         }
         if (this.state.sort === 'Completed'){
             return this.props.workOrders.map(workOrder => {
-                // debugger
                 if (workOrder.status === 'Completed'){
                     return <SingleWorkOrder workOrder={workOrder} />
                 }
-                else {return null}
+                else {
+                    if (noResults === 0){
+                        noResults = 1
+                        return <p>No {this.state.sort} Work Orders.</p>
+                    }
+                }
             })
         }
     }
@@ -48,7 +61,7 @@ class WorkOrderList extends Component {
             {key: 'c', text: 'Completed', value: 'Completed'}, 
         ]
         return(
-            <div >
+            <div id='work-order-list'>
                 <Header>{this.state.sort} Work Orders</Header>
                 <Dropdown placeholder="By Staus" selection name='sort' options={sortOptions} onChange={this.handleChange} />
                 {' '}
@@ -56,7 +69,6 @@ class WorkOrderList extends Component {
                 <br />
                 <br />
                 <Card.Group className='ui centered'>
-                    {/* {Array.isArray(this.props.workOrders) ? this.renderCards() : null} */}
                     {Array.isArray(this.props.workOrders) ? 
                      this.workOrderSort()
                     : null}
@@ -68,7 +80,6 @@ class WorkOrderList extends Component {
 }
 
 const mapStateToProps = state => {
-    // debugger
     return{
         workOrders: state.workOrders.workOrders
     }

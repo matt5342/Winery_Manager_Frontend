@@ -23,10 +23,17 @@ export default function patchWorkOrder(attributes) {
             .then(r => r.json())
             .then(workOrder => {
                 // debugger
+                let messageElement;
+                if (document.getElementById('tank-map')){
+                    messageElement = document.getElementById('tank-map')
+                }
+                else if (document.getElementById('single-tank')){
+                    messageElement = document.getElementById('single-tank')
+                } 
+                else {messageElement = document.getElementById('work-order-list')}
                 if (Object.keys(workOrder).includes("message")){
-
                     render(<TriggerModalMessage message={workOrder.message} />, 
-                        document.getElementById("single-tank")) 
+                        messageElement) 
                 }
                 else {
                     dispatch({ type: "PATCH_WORK_ORDER", workOrder })
