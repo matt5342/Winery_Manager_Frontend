@@ -3,7 +3,7 @@ export default function fetchLots() {
     // debugger
     return (dispatch) => {
         dispatch({ type: 'START_FETCHING_LOTS' });
-        fetch('http://localhost:3000/lots', {
+        fetch('https://winery-manager.herokuapp.com/lots', {
             headers: {"Authorization": localStorage.token}
         })
         .then(r => r.json())

@@ -56,11 +56,9 @@ class MainContainer extends Component {
                 }
             })
         }
-        fetch('http://localhost:3000/section', reqObj)
+        fetch('https://winery-manager.herokuapp.com/section', reqObj)
         .then(r => r.json())
         .then(data => {
-                // debugger
-                // localStorage.setItem("token", data.jwt)
                 this.props.fetchSections()
             }) 
     }

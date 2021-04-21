@@ -31,7 +31,7 @@ class SignUp extends Component {
             }
         })
     }
-    fetch('http://localhost:3000/signup', reqObj)
+    fetch('https://winery-manager.herokuapp.com/signup', reqObj)
     .then(r => r.json())
     .then(data => {
         // debugger

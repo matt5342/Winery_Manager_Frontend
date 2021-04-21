@@ -3,7 +3,7 @@ export default function fetchUser() {
 
     return (dispatch) => {
         dispatch({ type: 'START_FETCHING_CURRENT_USER' });
-        fetch('http://localhost:3000/login', {
+        fetch('https://winery-manager.herokuapp.com/login', {
             headers: {"Authorization": localStorage.token}
         })
         .then(r => r.json())

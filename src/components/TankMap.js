@@ -61,7 +61,7 @@ class TankMap extends Component {
                 }
             })
         }
-        fetch('http://localhost:3000/section/' + this.props.section_id + '/new_tank', reqObj)
+        fetch('https://winery-manager.herokuapp.com/section/' + this.props.section_id + '/new_tank', reqObj)
         .then(r => r.json())
         .then(data => {
             // debugger

@@ -17,7 +17,7 @@ export default function patchTanks(layout_array, section_id) {
                     }
                 })
             }
-            fetch('http://localhost:3000/section/' + section_id + '/tanks/' + layout.i, reqObj)
+            fetch('https://winery-manager.herokuapp.com/section/' + section_id + '/tanks/' + layout.i, reqObj)
             // .then(r => r.json())
             // .then(tank => {
             //     debugger

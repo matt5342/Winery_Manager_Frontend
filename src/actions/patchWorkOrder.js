@@ -19,7 +19,7 @@ export default function patchWorkOrder(attributes) {
                     }
                 })
             }
-            fetch('http://localhost:3000/work_orders/' + attributes.work_order_id, reqObj)
+            fetch('https://winery-manager.herokuapp.com/work_orders/' + attributes.work_order_id, reqObj)
             .then(r => r.json())
             .then(workOrder => {
                 // debugger

@@ -2,7 +2,7 @@
 export default function fetchSections() {
     return (dispatch) => {
         dispatch({ type: 'START_FETCHING_SECTION' });
-        fetch('http://localhost:3000/section', {
+        fetch('https://winery-manager.herokuapp.com/section', {
             headers: {"Authorization": localStorage.token}
         })
         .then(r => r.json())

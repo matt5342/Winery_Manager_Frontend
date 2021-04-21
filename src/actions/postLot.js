@@ -23,7 +23,7 @@ export default function postLot(attributes) {
                 }
             })
         }
-        fetch('http://localhost:3000/lots/' + attributes.tank_id, reqObj)
+        fetch('https://winery-manager.herokuapp.com/lots/' + attributes.tank_id, reqObj)
         .then(r => r.json())
         .then(lot => {
             // debugger

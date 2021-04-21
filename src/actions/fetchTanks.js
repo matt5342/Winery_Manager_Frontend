@@ -3,7 +3,7 @@ export default function fetchTanks(section_id) {
     // debugger
     return (dispatch) => {
         dispatch({ type: 'START_FETCHING_TANKS' });
-        fetch('http://localhost:3000/section/' + section_id + '/tanks', {
+        fetch('https://winery-manager.herokuapp.com/section/' + section_id + '/tanks', {
             headers: {"Authorization": localStorage.token}
         })
         .then(r => r.json())

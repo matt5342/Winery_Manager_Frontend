@@ -22,7 +22,7 @@ export default function postWorkOrder(attributes) {
                 }
             })
         }
-        fetch('http://localhost:3000/work_order/', reqObj)
+        fetch('https://winery-manager.herokuapp.com/work_order/', reqObj)
         .then(r => r.json())
         .then(workOrder => {
             let messageElement;

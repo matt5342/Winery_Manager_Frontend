@@ -25,7 +25,7 @@ class LogIn extends Component {
                 }
             })
         }
-        fetch('http://localhost:3000/login', reqObj)
+        fetch('https://winery-manager.herokuapp.com/login', reqObj)
         .then(r => r.json())
         .then(data => {
             // debugger
