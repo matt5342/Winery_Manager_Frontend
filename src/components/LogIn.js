@@ -30,7 +30,7 @@ class LogIn extends Component {
         fetch('https://winery-manager.herokuapp.com/login', reqObj)
         .then(r => r.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             // debugger
             if (Object.keys(data).includes("message")) {
                 this.setState({modalOpen: true})

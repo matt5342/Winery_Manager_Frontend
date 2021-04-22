@@ -39,6 +39,6 @@ export default function patchWorkOrder(attributes) {
                     dispatch({ type: "PATCH_WORK_ORDER", workOrder })
                 }
             })
-            .then(dispatch(fetchAllTanks())) 
+            .then(dispatch(fetchAllTanks())).then(this.forceUpdate()) 
     }
 }

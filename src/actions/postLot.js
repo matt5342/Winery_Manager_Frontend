@@ -35,7 +35,7 @@ export default function postLot(attributes) {
                 dispatch({ type: 'POST_LOT', lot })
             }
         })
-        .then(dispatch(fetchTanks(attributes.section_id))) 
+        .then(dispatch(fetchTanks(attributes.section_id))).then(this.forceUpdate()) 
     }
 
 }
